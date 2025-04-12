@@ -14,12 +14,13 @@ import java.util.Objects;
 
 public class DriverManagerTL {
 
-    //private static WebDriver driver;
-    //private static WebDriver driver; // Fix
-    private static final ThreadLocal<WebDriver> dr = new ThreadLocal<>();
+    private static ThreadLocal<WebDriver> dr = new ThreadLocal<>();
 
-    public static void setDriver(WebDriver driverRef) {
-        dr.set(driverRef);
+    public static void setDriver(WebDriver driver) {
+        if (driver == null) {
+            throw new IllegalArgumentException("Driver cannot be null");
+        }
+        dr.set(driver);
     }
 
     public static WebDriver getDriver() {
@@ -33,13 +34,11 @@ public class DriverManagerTL {
     public static void init() throws MalformedURLException {
 
         if (Objects.isNull(DriverManagerTL.getDriver())) {
+            // Optional: Add ChromeOptions if needed
             ChromeOptions options = new ChromeOptions();
-            options.setCapability("selenoid:options", Map.of(
-                    "enableVNC", true,
-                    "enableVideo", true,
-                    "videoName", "test1-video.mp4"
-            ));
-            WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+            options.addArguments("--start-maximized"); // Optional: open maximized
+
+            WebDriver driver = new ChromeDriver(options);
             setDriver(driver);
         }
     }

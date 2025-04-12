@@ -16,7 +16,7 @@ public class PropertyReader {
     public static String readKey(String key) {
         Properties p = new Properties();
         try {
-            FileInputStream fis = new FileInputStream("src/main/resources/data.properties");
+            FileInputStream fis = new FileInputStream("src/resources/data.properties");
             p.load(fis);
         } catch (IOException e) {
             System.out.println("Error loading properties file: " + e.getMessage());

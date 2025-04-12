@@ -19,7 +19,8 @@ public class LoginTest extends CommonToAllTest {
 
         DashboardPage_POM dashboardPagePom = pagePom.afterLogin();
         String expected_username = dashboardPagePom.loggedInUserName();
-
+        System.out.println("User name is " +expected_username);
+           Thread.sleep(10000);
         assertThat(expected_username)
                 .isNotNull()
                 .isNotBlank()
